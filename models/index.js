@@ -3,10 +3,10 @@ const {sequelize, syncDb} = require('../db')
 const { DataTypes } = require('sequelize')
 
 //Grab Model Functions
-const DefineUserModel = require('./User')
-const UserModel = DefineUserModel(sequelize, DataTypes)
-
+const DefineUser = require('./User')
 const DefineMember = require('./Member')
+
+const User = DefineUser(sequelize, DataTypes)
 const Member = DefineMember(sequelize, DataTypes)
 
 
@@ -16,7 +16,7 @@ const Member = DefineMember(sequelize, DataTypes)
 syncDb(sequelize, {force: true})
 
 module.exports = { 
-    UserModel, 
+    User, 
     Member 
 }
 
