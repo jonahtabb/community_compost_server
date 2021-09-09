@@ -1,16 +1,8 @@
 
 module.exports = (sequelize, DataTypes) => {
 
-    const Member = sequelize.define("User", {
-            username: {
-                type: DataTypes.STRING,
-                allowNull: false,
-                unique: true
-            },
-            password_hash: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
+    const Member = sequelize.define("Member", {
+
             first_name: {
                 type: DataTypes.STRING,
                 allowNull: false
@@ -32,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false
             },
             phone_primary_type: {
-                type: DataTypes.ENUM('Mobile', 'Home', 'Office'),
+                type: DataTypes.STRING,
                 allowNull: false
             },
             phone_secondary: {
@@ -40,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: true
             },
             phone_secondary_type: {
-                type: DataTypes.ENUM('Mobile', 'Home', 'Office'),
+                type: DataTypes.STRING,
                 allowNull: true
             },
             bio: {
