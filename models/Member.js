@@ -11,10 +11,6 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: false
             },
-            email_primary: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
             email_secondary: {
                 type: DataTypes.STRING,
                 allowNull: true

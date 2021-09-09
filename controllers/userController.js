@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const bcrypt = require("bcryptjs/dist/bcrypt")
-const { User } = require('../models')
+const { UserModel } = require('../models')
 const { UniqueConstraintError } = require("sequelize/lib/errors");
 const jwt = require("jsonwebtoken");
 
@@ -17,7 +17,7 @@ router.post("/register", async (req, res) => {
     let { email, password, type } = req.body.user;
     
     try {
-        const user = await User.create({
+        const user = await UserModel.create({
             email,
             password_hash: bcrypt.hashSync(password, 13),
             user_type: type

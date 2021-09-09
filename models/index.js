@@ -6,17 +6,19 @@ const { DataTypes } = require('sequelize')
 const DefineUser = require('./User')
 const DefineMember = require('./Member')
 
-const User = DefineUser(sequelize, DataTypes)
-const Member = DefineMember(sequelize, DataTypes)
-
+const UserModel = DefineUser(sequelize, DataTypes)
+const MemberModel = DefineMember(sequelize, DataTypes)
 
 //Define Associations Here
+UserModel.hasOne(MemberModel)
+MemberModel.belongsTo(UserModel)
+
 
 //Sync
-syncDb(sequelize, {force: true})
+syncDb(sequelize, {alter: true})
 
 module.exports = { 
-    User, 
-    Member 
+    UserModel, 
+    MemberModel
 }
 
