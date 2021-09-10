@@ -16,7 +16,14 @@ UserModel.hasOne(MemberModel)
 MemberModel.belongsTo(UserModel)
 
 UserModel.hasOne(AdminModel)
-AdminModel.belongsTo(UserModel)
+AdminModel.belongsTo(UserModel, {
+    foreignKey: {
+        name: 'UserId',
+        type: DataTypes.NUMBER,
+        unique: true,
+        allowNull: false
+    }
+})
 
 
 //Sync

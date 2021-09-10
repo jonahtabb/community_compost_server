@@ -23,19 +23,32 @@ router.post('/create', validateJWT, async (req, res) => {
 
     try {
 
-        const admin = await AdminModel.create({
-            first_name,
-            last_name,
-            phone,
-            phone_type,
-            bio,
-            UserId
+        const profileAlreadyExists = await AdminModel.findOne({
+            where: {
+                UserId
+            }
         })
 
-        res.status(201).json({
-            message: "Admin Profile Successfully Created",
-            admin
-        })
+        if (!profileAlreadyExists) {
+            const admin = await AdminModel.create({
+                first_name,
+                last_name,
+                phone,
+                phone_type,
+                bio,
+                UserId
+            })
+    
+            res.status(201).json({
+                message: "Admin Profile Successfully Created",
+                admin
+            })
+
+        } else {
+            throw "An admin profile already exists for this user. Only one profile is allowed for each Admin user"
+        }
+
+
     } catch (error) {
         if (error instanceof UniqueConstraintError) {
             res.status(409).json({
@@ -43,7 +56,8 @@ router.post('/create', validateJWT, async (req, res) => {
             })
         } else {
             res.status(500).json({
-                message: "Failed to create member profile"
+                message: "Failed to create Admin profile",
+                error
             })
             console.log(error)
         }
