@@ -1,6 +1,6 @@
 const router = require("express").Router()
 const { UniqueConstraintError } = require("sequelize/lib/errors");
-const { MemberModel } = require('../models')
+const { MemberModel, CommunityModel } = require('../models')
 const validateJWT = require('../middleware/validate-jwt')
 
 router.get('/test', (req, res) => {
@@ -55,6 +55,32 @@ router.post('/create', validateJWT, async (req, res) => {
             console.log(error)
         }
     }
+})
+
+//Update Member OWN Community
+router.put('/updateowncommunity/:communityid', validateJWT, async (req, res) => {
+    const { id } = req.user;
+    const communityId = parseInt(req.params.communityid) 
+
+    try {
+        const member = await MemberModel.findOne({ 
+            where: { UserId: id}
+        })
+
+        const community = await CommunityModel.findOne({
+            where: { id: communityId  }
+        })
+
+        await member.setCommunity(community)
+
+        res.status(200).json({
+            message: `Member added to community with id ${communityId}`,
+            member
+        })
+    } catch (error) {
+        res.status(500).json({error})
+    }
+
 })
 
 //Get Member's OWN Profile

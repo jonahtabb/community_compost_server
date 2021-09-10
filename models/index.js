@@ -21,18 +21,15 @@ MemberModel.belongsTo(UserModel)
 
 //One User can have one Admin
 UserModel.hasOne(AdminModel)
-AdminModel.belongsTo(UserModel, {
-    foreignKey: {
-        name: 'UserId',
-        type: DataTypes.NUMBER,
-        unique: true,
-        allowNull: false
-    }
-})
+AdminModel.belongsTo(UserModel)
 
 //One Admin has one Community
 AdminModel.hasOne(CommunityModel);
 CommunityModel.belongsTo(AdminModel);
+
+//One Community has many Members
+CommunityModel.hasMany(MemberModel);
+MemberModel.belongsTo(CommunityModel);
 
 
 //Sync

@@ -51,4 +51,20 @@ router.post('/create', validateJWT, async (req, res) => {
 
 })
 
+//Get All Communities
+router.get('/all', validateJWT, async (req, res) => {
+    try {
+        const allCommunities = await CommunityModel.findAll()
+        res.status(201).json({
+            message: "All Communities Retrieved",
+            allCommunities
+        })
+    } catch (error) {
+        res.status(500).json({
+            error
+        })
+    }
+})
+
+
 module.exports = router
