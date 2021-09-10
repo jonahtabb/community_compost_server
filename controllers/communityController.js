@@ -8,7 +8,7 @@ router.get('/test', validateJWT, (req, res) => {
     console.log(req.user.is_admin)
 })
 
-//Create New Community (Admin Action)
+//Admin Action: Create New Community
 router.post('/create', validateJWT, async (req, res) => {
     const { id, is_admin } = req.user
     

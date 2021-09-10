@@ -1,6 +1,6 @@
 const router = require("express").Router()
 const { UniqueConstraintError } = require("sequelize/lib/errors");
-const { MemberModel, CommunityModel } = require('../models')
+const { MemberModel, CommunityModel, AdminModel } = require('../models')
 const validateJWT = require('../middleware/validate-jwt')
 
 router.get('/test', (req, res) => {
@@ -57,7 +57,7 @@ router.post('/create', validateJWT, async (req, res) => {
     }
 })
 
-//Update Member OWN Community
+//Member Action: Update Member OWN Community
 router.put('/updateowncommunity/:communityid', validateJWT, async (req, res) => {
     const { id } = req.user;
     const communityId = parseInt(req.params.communityid) 
@@ -83,7 +83,8 @@ router.put('/updateowncommunity/:communityid', validateJWT, async (req, res) => 
 
 })
 
-//Get Member's OWN Profile
+
+//Member Action: Get Member's OWN Profile
 router.get("/myprofile", validateJWT, async (req, res) => {
     const { id } = req.user;
     try {
@@ -97,6 +98,35 @@ router.get("/myprofile", validateJWT, async (req, res) => {
         })
     } catch (error) {
         res.status(500).json({error})
+    }
+})
+
+//Admin Action: View All Members of OWN Community
+router.get("/all", validateJWT, async (req, res) => {
+    const { id, is_admin } = req.user
+    try {
+        if (is_admin) {
+            const admin = await AdminModel.findOne({
+                where: { UserId: id}
+            })
+
+            const community = await CommunityModel.findOne({
+                where: { AdminId: admin.id}
+            })
+            
+            const allMembers = await MemberModel.findAll({
+                where: { CommunityId: community.id}
+            })
+
+            res.status(201).json({
+                message: "All Community Members Retrieved",
+                allMembers
+            })
+        } else throw "User is not administrator and cannot perform this action"
+    } catch (error) {
+        res.status(500).json({
+            error
+        })
     }
 })
 
