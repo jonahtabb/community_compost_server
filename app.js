@@ -10,6 +10,7 @@ startApp = async () => {
     app.use("/user", controllers.userController)
     app.use("/member", controllers.memberController)
     app.use("/admin", controllers.adminController)
+    app.use("/community", controllers.communityController)
 
     app.listen(3000, () => {
         console.log(`[Server]: App is listening on 3000.`);
