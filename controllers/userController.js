@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs/dist/bcrypt")
 const { UserModel } = require('../models')
 const { UniqueConstraintError } = require("sequelize/lib/errors");
 const jwt = require("jsonwebtoken");
+const validateJWT = require("../middleware/validate-jwt");
 
 
 //Test User Route
@@ -83,6 +84,26 @@ router.post('/login', async(req, res) => {
             message: "Failed to log user in",
             error
         })
+    }
+})
+
+//Delete OWN User (Currently only available for Members)
+router.delete("/delete", validateJWT, async (req, res) => {
+    const { id } = req.user
+    console.log(id)
+    try {
+
+        let deleted = UserModel.destroy({
+            where: { id: id}
+        })
+
+        res.status(200).json({
+            message: "User successfully deleted",
+            removedUser: deleted
+        })
+
+    } catch (error) {
+        res.status(500).json({error})
     }
 })
 
