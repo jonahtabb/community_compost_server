@@ -44,4 +44,22 @@ router.post('/create', validateJWT, async (req, res) => {
         }
     }
 })
+
+//Get Member's OWN Profile
+router.get("/myprofile", validateJWT, async (req, res) => {
+    const { id } = req.user;
+    try {
+        const memberProfile = await MemberModel.findOne({
+            where: {
+                UserId: id
+            }
+        })
+        res.status(200).json({
+            memberProfile   
+        })
+    } catch (error) {
+        res.status(500).json({error})
+    }
+})
+
 module.exports = router

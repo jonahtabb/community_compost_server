@@ -1,4 +1,5 @@
 module.exports = {
     userController: require('./userController'),
-    memberController: require('./memberController')
+    memberController: require('./memberController'),
+    adminController: require('./adminController')
 }
