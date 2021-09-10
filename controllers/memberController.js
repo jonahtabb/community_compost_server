@@ -26,8 +26,6 @@ router.post('/create', validateJWT, async (req, res) => {
             UserId
         })
 
-        // await member.setUserId(tempId)
-
         res.status(201).json({
             message: "Member Profile Successfully Created",
             member
