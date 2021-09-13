@@ -9,6 +9,7 @@ const DefineAdmin = require("./Admin");
 const DefineCommunity = require("./Community");
 const DefinePickupGroup = require("./PickupGroup");
 
+//Call Model Functions
 const UserModel = DefineUser(sequelize, DataTypes);
 const MemberModel = DefineMember(sequelize, DataTypes);
 const AdminModel = DefineAdmin(sequelize, DataTypes);
