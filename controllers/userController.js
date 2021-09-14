@@ -15,13 +15,21 @@ router.get('/test', (req, res) => {
 //Register New User
 router.post("/register", async (req, res) => {
     console.log("HIT USER REGISTER ROUTE", req.body.user)
-    let { email, password, is_admin } = await req.body.user;
+    const { 
+        email,
+        password,
+        is_admin,
+        first_name,
+        last_name
+     } = await req.body.user;
     
     try {
         const user = await UserModel.create({
             email,
             password_hash: bcrypt.hashSync(password, 13),
-            is_admin: is_admin
+            is_admin: is_admin,
+            first_name,
+            last_name
         })
         console.log(user)
         let token = jwt.sign({

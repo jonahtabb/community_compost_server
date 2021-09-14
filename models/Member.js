@@ -3,14 +3,6 @@ module.exports = (sequelize, DataTypes) => {
 
     const Member = sequelize.define("Member", {
 
-            first_name: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            last_name: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
             email_secondary: {
                 type: DataTypes.STRING,
                 allowNull: true

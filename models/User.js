@@ -14,7 +14,16 @@ module.exports = (sequelize, DataTypes) => {
         is_admin: {
             type: DataTypes.BOOLEAN,
             allowNull: false
-        }
+        },
+        first_name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        last_name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+
     })
 
     return User
