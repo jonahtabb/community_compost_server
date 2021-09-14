@@ -14,8 +14,7 @@ router.post('/create', validateJWT, async (req, res) => {
     const { id } = req.user;
     const UserId = id;
     const {
-        first_name,
-        last_name,
+        email_secondary,
         phone,
         phone_type,
         bio

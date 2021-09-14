@@ -7,6 +7,7 @@ const cors = require('cors')
 startApp = async () => {
     
     app.use(express.json())
+    //See cors configuration options here: https://www.npmjs.com/package/cors
     app.use(cors())
     app.options('*', cors())
     app.use("/user", controllers.userController)

@@ -45,7 +45,7 @@ PickupGroupModel.hasMany(MemberModel);
 MemberModel.belongsTo(PickupGroupModel);
 
 //Sync
-syncDb(sequelize, { alter: true });
+syncDb(sequelize, { force: true });
 
 module.exports = {
   UserModel,
