@@ -10,11 +10,13 @@ router.get("/test", validateJWT, (req, res) => {
 
 //Admin Action: Create New Community
 router.post("/create", validateJWT, async (req, res) => {
-  const { id, is_admin } = req.user;
 
-  const { name, description } = req.body.community;
 
   try {
+    const { id, is_admin } = req.user;
+
+    const { name, description } = req.body.community;
+    
     if (is_admin) {
       const admin = await AdminModel.findOne({ where: { UserId: id } });
 
