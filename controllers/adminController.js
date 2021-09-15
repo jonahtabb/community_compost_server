@@ -29,9 +29,10 @@ router.post('/create', validateJWT, async (req, res) => {
         })
 
         if (!profileAlreadyExists) {
+
+            
             const admin = await AdminModel.create({
-                first_name,
-                last_name,
+                email_secondary,
                 phone,
                 phone_type,
                 bio,

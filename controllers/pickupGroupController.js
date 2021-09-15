@@ -23,9 +23,12 @@ router.post('/create', validateJWT, async (req, res) => {
             if (admin) {
                 const community = await CommunityModel.findOne({ where: {AdminId: admin.id}})
 
-                const newPickupGroup = await PickupGroupModel.create({
-                    name, description, public_notes, start_time, end_time, day, CommunityId: community.id
+                const newPickupGroup = await community.createPickupGroup({
+                    name, description, public_notes, start_time, end_time, day
                 })
+                // const newPickupGroup = await PickupGroupModel.create({
+                //     name, description, public_notes, start_time, end_time, day, CommunityId: community.id
+                // })
 
                 res.status(201).json({
                     message: "New Pickup Group Created",
