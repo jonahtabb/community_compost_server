@@ -27,6 +27,11 @@ router.post("/create", validateJWT, async (req, res) => {
           },
         });
 
+        const user = await UserModel.findOne({where: {id: id}})
+        await user.update({
+          registration_complete: "1"
+        })
+
         if (!adminAlreadyHasCommunity) {
           const community = await CommunityModel.create({
             name,

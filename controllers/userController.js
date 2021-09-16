@@ -115,5 +115,21 @@ router.delete("/delete", validateJWT, async (req, res) => {
     }
 })
 
+//Get OWN User Data
+router.get("/me", validateJWT, async (req, res) => {
+    const { id } = req.user
+    try {
+        let user = await UserModel.findOne({
+            where: {id}
+        })
+
+        res.status(200).json({
+            message: "User Data Successfully Fetched",
+            userData: user
+        })
+    } catch (error) {
+        res.status(500).json({error})
+    }
+})
 
 module.exports = router

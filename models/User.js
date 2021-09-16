@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        registration_complete: {
+            type: DataTypes.BOOLEAN,
+            require: true,
+            defaultValue: false
+        }
 
     })
 
