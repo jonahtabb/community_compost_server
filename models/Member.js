@@ -1,3 +1,4 @@
+const { STRING } = require("sequelize/types")
 
 module.exports = (sequelize, DataTypes) => {
 
@@ -26,6 +27,24 @@ module.exports = (sequelize, DataTypes) => {
             bio: {
                 type: DataTypes.STRING(500),
                 allowNull: true
+            },
+            locationName: {
+                type: DataTypes.STRING,
+            },
+            locationAddress1: {
+                type: DataTypes.STRING
+            },
+            locationAddress2: {
+                type: DataTypes.STRING
+            },
+            locationCity: {
+                type: DataTypes.STRING
+            },
+            locationZip: {
+                type: DataTypes.STRING
+            },
+            locationState: {
+                type: DataTypes.STRING
             }
         })
     
