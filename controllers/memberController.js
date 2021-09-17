@@ -23,6 +23,13 @@ router.post("/create", validateJWT, async (req, res) => {
     phone_secondary,
     phone_secondary_type,
     bio,
+    location_name,
+    location_address1,
+    location_address2,
+    location_city,
+    location_zip,
+    location_state
+
   } = req.body.member;
 
   try {
@@ -34,14 +41,18 @@ router.post("/create", validateJWT, async (req, res) => {
 
     if (!profileAlreadyExists) {
       const member = await MemberModel.create({
-        first_name,
-        last_name,
         email_secondary,
         phone_primary,
         phone_primary_type,
         phone_secondary,
         phone_secondary_type,
         bio,
+        location_name,
+        location_address1,
+        location_address2,
+        location_city,
+        location_zip,
+        location_state,
         UserId,
       });
 

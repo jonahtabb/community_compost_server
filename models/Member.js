@@ -26,6 +26,24 @@ module.exports = (sequelize, DataTypes) => {
             bio: {
                 type: DataTypes.STRING(500),
                 allowNull: true
+            },
+            location_name: {
+                type: DataTypes.STRING,
+            },
+            location_address1: {
+                type: DataTypes.STRING
+            },
+            location_address2: {
+                type: DataTypes.STRING
+            },
+            location_city: {
+                type: DataTypes.STRING
+            },
+            location_zip: {
+                type: DataTypes.STRING
+            },
+            location_state: {
+                type: DataTypes.STRING
             }
         })
     

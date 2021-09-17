@@ -27,6 +27,7 @@ router.post("/create", validateJWT, async (req, res) => {
           },
         });
 
+        //Mark the registration as complete
         const user = await UserModel.findOne({where: {id: id}})
         await user.update({
           registration_complete: "1"
