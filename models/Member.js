@@ -1,4 +1,3 @@
-const { STRING } = require("sequelize/types")
 
 module.exports = (sequelize, DataTypes) => {
 
@@ -28,22 +27,22 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING(500),
                 allowNull: true
             },
-            locationName: {
+            location_name: {
                 type: DataTypes.STRING,
             },
-            locationAddress1: {
+            location_address1: {
                 type: DataTypes.STRING
             },
-            locationAddress2: {
+            location_address2: {
                 type: DataTypes.STRING
             },
-            locationCity: {
+            location_city: {
                 type: DataTypes.STRING
             },
-            locationZip: {
+            location_zip: {
                 type: DataTypes.STRING
             },
-            locationState: {
+            location_state: {
                 type: DataTypes.STRING
             }
         })
