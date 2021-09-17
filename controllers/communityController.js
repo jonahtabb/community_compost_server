@@ -55,7 +55,7 @@ router.post("/create", validateJWT, async (req, res) => {
 });
 
 //Get All Communities
-router.get("/all", validateJWT, async (req, res) => {
+router.get("/all", async (req, res) => {
   try {
     const allCommunities = await CommunityModel.findAll();
     res.status(201).json({

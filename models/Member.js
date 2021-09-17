@@ -44,6 +44,9 @@ module.exports = (sequelize, DataTypes) => {
             },
             location_state: {
                 type: DataTypes.STRING
+            },
+            location_notes: {
+                type: DataTypes.STRING
             }
         })
     
