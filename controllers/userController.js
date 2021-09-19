@@ -132,5 +132,28 @@ router.get("/me", validateJWT, async (req, res) => {
     }
 })
 
+//Update OWN user
+router.put("/update", validateJWT, async (req, res) => {
+    const { id } = req.user
+    const { email, first_name, last_name, registration_complete} = req.body.user
+
+    try {
+        foundUser = await UserModel.update(
+            {
+                email, first_name, last_name, registration_complete
+            },
+            {
+                where: {id: id}
+            }
+        )
+        res.status(200).json({
+            message: "User Data Successfully Updated",
+            userData: foundUser
+        })
+    } catch (error) {
+        res.status(500).json({error})
+    }
+})
+
 
 module.exports = router
