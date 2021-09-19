@@ -29,7 +29,8 @@ router.post("/create", validateJWT, async (req, res) => {
     location_city,
     location_zip,
     location_state,
-    location_notes
+    location_notes,
+    CommunityId
 
   } = req.body.member;
 
@@ -56,6 +57,7 @@ router.post("/create", validateJWT, async (req, res) => {
         location_state,
         location_notes,
         UserId,
+        CommunityId
       });
 
       res.status(201).json({
