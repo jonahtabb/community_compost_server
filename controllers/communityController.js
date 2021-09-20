@@ -69,4 +69,25 @@ router.get("/all", async (req, res) => {
   }
 });
 
+//Get OWN Community Profile
+router.get("/me", validateJWT, async (req, res) => {
+  const { id } = req.user
+  try {
+    const userExtended = await UserModel.findOne({
+      where: {id},
+      include: {model: AdminModel}
+    })
+    const adminId = await userExtended.Admin.id
+    const communityProfile = await CommunityModel.findOne({
+      where: {id: adminId}
+    })
+    res.status(201).json({
+      message: "Retrieved Community Profile",
+      communityProfile
+    })
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+})
+
 module.exports = router;

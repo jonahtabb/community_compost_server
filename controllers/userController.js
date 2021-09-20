@@ -117,8 +117,9 @@ router.delete("/delete", validateJWT, async (req, res) => {
 
 //Get OWN User Data
 router.get("/me", validateJWT, async (req, res) => {
-    const { id } = req.user
+    
     try {
+        const { id } = req.user
         let user = await UserModel.findOne({
             where: {id}
         })

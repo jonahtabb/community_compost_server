@@ -64,4 +64,22 @@ router.post('/create', validateJWT, async (req, res) => {
     }
 })
 
+//Get OWN Admin Profile
+router.get("/me", validateJWT, async (req, res) => {
+    
+    try {
+        const { id } = req.user
+        let adminProfile = await AdminModel.findOne({
+            where: {UserId: id}
+        })
+
+        res.status(200).json({
+            message: "Admin Profile Successfully Fetched",
+            adminProfile
+        })
+    } catch (error) {
+        res.status(500).json({error})
+    }
+})
+
 module.exports = router
