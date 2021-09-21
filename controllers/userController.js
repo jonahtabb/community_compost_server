@@ -117,8 +117,9 @@ router.delete("/delete", validateJWT, async (req, res) => {
 
 //Get OWN User Data
 router.get("/me", validateJWT, async (req, res) => {
-    const { id } = req.user
+    
     try {
+        const { id } = req.user
         let user = await UserModel.findOne({
             where: {id}
         })
@@ -126,6 +127,29 @@ router.get("/me", validateJWT, async (req, res) => {
         res.status(200).json({
             message: "User Data Successfully Fetched",
             userData: user
+        })
+    } catch (error) {
+        res.status(500).json({error})
+    }
+})
+
+//Update OWN user
+router.put("/update", validateJWT, async (req, res) => {
+    const { id } = req.user
+    const { email, first_name, last_name, registration_complete} = req.body.user
+
+    try {
+        foundUser = await UserModel.update(
+            {
+                email, first_name, last_name, registration_complete
+            },
+            {
+                where: {id: id}
+            }
+        )
+        res.status(200).json({
+            message: "User Data Successfully Updated",
+            userData: foundUser
         })
     } catch (error) {
         res.status(500).json({error})
