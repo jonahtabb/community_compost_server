@@ -5,6 +5,7 @@ const {
   CommunityModel,
   AdminModel,
   PickupGroupModel,
+  UserModel,
 } = require("../models");
 const validateJWT = require("../middleware/validate-jwt");
 
@@ -142,6 +143,7 @@ router.get("/all", validateJWT, async (req, res) => {
 
       const allMembers = await MemberModel.findAll({
         where: { CommunityId: community.id },
+        include: [{model: UserModel}]
       });
 
       res.status(201).json({
