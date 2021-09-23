@@ -8,6 +8,7 @@ const {
   UserModel,
 } = require("../models");
 const validateJWT = require("../middleware/validate-jwt");
+const res = require("express/lib/response");
 
 router.get("/test", (req, res) => {
   res.send("Testing This route!");
@@ -213,5 +214,31 @@ router.put("/removefromgroup", validateJWT, async (req, res) => {
     res.status(500).json({ error });
   }
 });
+
+//Admin Action: Get All Members from a Pickup Group
+router.get("/group/:id", validateJWT, async(req, res) => {
+  const {is_admin} = req.user;
+  const groupId = req.params.id
+  try {
+    if (is_admin) {
+      const members = await MemberModel.findAll({
+        where: {PickupGroupId: +groupId},
+        include: [{
+          model: UserModel,
+        }]
+      }
+
+      )
+      // console.log(await members)
+      res.status(200).json({
+        message: "Fetched all members from this pickup group",
+        members
+      })
+    } else throw new Error ("User is not administrator and cannot perform this action")
+
+  } catch (error) {
+    res.status(500).json(error)
+  }
+})
 
 module.exports = router;

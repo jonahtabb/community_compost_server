@@ -73,4 +73,5 @@ router.get("/all", validateJWT, async (req, res) => {
     }
 })
 
+
 module.exports = router
