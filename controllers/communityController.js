@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { UniqueConstraintError } = require("sequelize/lib/errors");
-const { CommunityModel, AdminModel, UserModel } = require("../models");
+const { CommunityModel, AdminModel, UserModel, MemberModel } = require("../models");
 const validateJWT = require("../middleware/validate-jwt");
 
 router.get("/test", validateJWT, (req, res) => {
@@ -69,7 +69,7 @@ router.get("/all", async (req, res) => {
   }
 });
 
-//Get OWN Community Profile
+//Admin Action: Get OWN Community Profile
 router.get("/me", validateJWT, async (req, res) => {
   const { id } = req.user
   try {
@@ -80,6 +80,28 @@ router.get("/me", validateJWT, async (req, res) => {
     const adminId = await userExtended.Admin.id
     const communityProfile = await CommunityModel.findOne({
       where: {id: adminId}
+    })
+    res.status(201).json({
+      message: "Retrieved Community Profile",
+      communityProfile
+    })
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+})
+
+//Member Action: Get OWN Community Profile
+
+router.get("/mymemberprofile", validateJWT, async (req, res) => {
+  const { id } = req.user
+  try {
+    const memberProfile = await MemberModel.findOne({
+      where: {
+        UserId: id,
+      },
+    });
+    const communityProfile = await CommunityModel.findOne({
+      where: {id: memberProfile.CommunityId}
     })
     res.status(201).json({
       message: "Retrieved Community Profile",
