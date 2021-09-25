@@ -113,7 +113,7 @@ router.put(
 );
 
 //Member Action: Get Member's OWN Profile
-router.get("/myprofile", validateJWT, async (req, res) => {
+router.get("/me", validateJWT, async (req, res) => {
   const { id } = req.user;
   try {
     const memberProfile = await MemberModel.findOne({
