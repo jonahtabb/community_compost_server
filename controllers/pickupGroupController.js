@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const bcrypt = require("bcryptjs/dist/bcrypt")
-const { PickupGroupModel, AdminModel, CommunityModel } = require('../models')
+const { PickupGroupModel, AdminModel, CommunityModel, MemberModel } = require('../models')
 const { UniqueConstraintError } = require("sequelize/lib/errors");
 const jwt = require("jsonwebtoken");
 const validateJWT = require("../middleware/validate-jwt");
@@ -70,6 +70,27 @@ router.get("/all", validateJWT, async (req, res) => {
         res.status(500).json({
             error
         })
+    }
+})
+
+//Member Action: Get Own Pickup Group
+router.get("/my", validateJWT, async (req, res) => {
+    const {id} = req.user
+    try {
+        const member = await MemberModel.findOne({
+            where: {
+                UserId: id,
+            },
+            include:{
+                model: PickupGroupModel
+            }
+        })
+        res.status(201).json({
+            message: "Retrieved Pickup Group",
+            pickupGroup: member.PickupGroup
+        })
+    } catch (error){
+        res.status(500).json({error})
     }
 })
 
