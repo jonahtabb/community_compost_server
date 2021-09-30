@@ -7,7 +7,12 @@ const sequelize = new Sequelize(
     {
         host: process.env.DB_HOST,
         dialect: 'postgres',
-        ssl: process.env.ENVIRONMENT === 'production'
+        dialectOptions: {
+            ssl: {
+                require: process.env.ENVIRONMENT === 'production',
+                rejectUnauthorized: false
+            }
+        }
     }
 )
 console.log('************', process.env.ENVIRONMENT)
