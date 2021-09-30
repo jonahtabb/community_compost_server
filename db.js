@@ -10,6 +10,7 @@ const sequelize = new Sequelize(
         ssl: process.env.ENVIRONMENT === 'production'
     }
 )
+console.log()
 
 async function syncDb(sequelize, options){
     const {force, alter} = options
