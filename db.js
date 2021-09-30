@@ -1,18 +1,29 @@
 const { Sequelize } = require('sequelize')
 
+const dialectOptions = 
+    process.env.ENVIRONMENT === 'production'
+    ?
+    {
+        ssl: {
+            require: process.env.ENVIRONMENT === 'production',
+            rejectUnauthorized: false
+        }
+    }
+    : ''
+
+const PASS = 
+    process.env.ENVIRONMENT === 'production'
+    ?   encodeURIComponent(process.env.DB_PASS)
+    :   process.env.DB_PASS
+
 const sequelize = new Sequelize(
     process.env.DB_DBNAME,
     process.env.DB_USER,
-    encodeURIComponent(process.env.DB_PASS),
+    PASS,
     {
         host: process.env.DB_HOST,
         dialect: 'postgres',
-        dialectOptions: {
-            ssl: {
-                require: process.env.ENVIRONMENT === 'production',
-                rejectUnauthorized: false
-            }
-        }
+        dialectOptions   
     }
 )
 console.log('************', process.env.ENVIRONMENT)
