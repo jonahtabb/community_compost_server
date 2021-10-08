@@ -79,6 +79,26 @@ router.get("/all", validateJWT, async (req, res) => {
     }
 });
 
+//Admin Action: Delete a Pickup Group
+router.delete("/delete/:id", validateJWT, async (req, res) => {
+    const { id, is_admin } = req.user;
+    const groupId = parseInt(req.params.id)
+    try {
+        if (is_admin){
+            if (groupId >= 0 ) {
+                await PickupGroupModel.destroy({
+                    where: {
+                        id: groupId
+                    }
+                })
+            } else throw new Error("This was not a valid group Id")
+        } else throw new Error("User is not authorized to perform this action")
+
+    } catch (error) {
+        console.error({error})
+    }
+})
+
 //Member Action: Get Own Pickup Group
 router.get("/my", validateJWT, async (req, res) => {
     const { id } = req.user;
